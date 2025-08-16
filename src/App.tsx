@@ -6,6 +6,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [theme, setTheme] = useState<'dark' | 'light'>(() => (localStorage.getItem('theme') as 'dark' | 'light') || 'dark')
   const [showTop, setShowTop] = useState(false)
+  const [featureModal, setFeatureModal] = useState<null | 'card-scanner'>(null)
   useEffect(() => { document.documentElement.setAttribute('data-theme', theme); localStorage.setItem('theme', theme); }, [theme])
   const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
   const toggle = () => setMenuOpen(o => !o)
@@ -168,6 +169,18 @@ export default function App() {
         <section id="features" className="features" aria-labelledby="features-title">
           <h2 id="features-title">Platform Pillars</h2>
           <div className="feature-grid">
+            <div
+              className="feature-card interactive"
+              role="button"
+              tabIndex={0}
+              aria-haspopup="dialog"
+              aria-label="Open Business Card Scanner details"
+              onClick={() => setFeatureModal('card-scanner')}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFeatureModal('card-scanner') } }}
+            >
+              <h3>Business Card Scanner</h3>
+              <p>Capture physical cards instantly, auto‑extract contact data, and build a living relationship graph.</p>
+            </div>
             <div className="feature-card">
               <h3>Unified Collaboration</h3>
               <p>Centralized workspaces streamline cross‑company communication and decision cycles.</p>
@@ -221,6 +234,53 @@ export default function App() {
           onClick={scrollTop}
           aria-label="Scroll to top"
         >↑</button>
+      )}
+      {featureModal === 'card-scanner' && (
+        <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-card-scanner-title">
+          <div className="modal-window">
+            <header className="modal-header">
+              <h2 id="modal-card-scanner-title">Business Card Scanner</h2>
+              <button className="modal-close" aria-label="Close" onClick={() => setFeatureModal(null)}>×</button>
+            </header>
+            <div className="modal-body">
+              <p className="lead">Turn every in‑person interaction into structured, actionable intelligence. Photograph a business card and receive clean, enriched contact data in seconds—securely attached to your user account.</p>
+              <div className="modal-columns">
+                <div>
+                  <h3>How It Works</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Capture:</strong> Snap via mobile camera or upload an image.</li>
+                    <li><strong>OCR &amp; Parse:</strong> Extracts names, roles, company, phones, emails, addresses, socials.</li>
+                    <li><strong>Normalization:</strong> Standardizes formats (phones, casing, domains).</li>
+                    <li><strong>Enrichment:</strong> (Optional) Adds firmographics for richer context.</li>
+                    <li><strong>De‑duplication:</strong> Similar contact detection + merge suggestions.</li>
+                    <li><strong>Tagging:</strong> Event, region, tier labels for segmentation.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>Value &amp; Outcomes</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Zero loss:</strong> No drawer backlog—everything becomes searchable.</li>
+                    <li><strong>Clean data:</strong> Reduced manual typing &amp; mistakes.</li>
+                    <li><strong>Faster follow‑up:</strong> Immediate availability fuels timely outreach.</li>
+                    <li><strong>Team clarity:</strong> Structured profile boosts collaboration context.</li>
+                    <li><strong>Compliance:</strong> Consent + opt‑out metadata preserved.</li>
+                    <li><strong>Insight graph:</strong> Aggregated contacts reveal relationship patterns.</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="modal-extra">
+                <h3>Privacy &amp; Security</h3>
+                <p>Secure processing pipeline; extracted fields scoped per user access. Optional redaction policies (e.g., personal numbers) and retention windows configurable. Nothing shared externally unless you explicitly export or sync.</p>
+                <p className="footnote">Roadmap: multi‑language OCR, handwriting assistance, CRM auto‑sync, meeting auto‑association.</p>
+              </div>
+              <div className="modal-actions">
+                <a href="#contact" className="btn primary" onClick={() => setFeatureModal(null)}>Request Early Access</a>
+                <button className="btn secondary" onClick={() => setFeatureModal(null)}>Close</button>
+              </div>
+            </div>
+          </div>
+          <button className="modal-backdrop" aria-label="Close overlay" onClick={() => setFeatureModal(null)} />
+        </div>
       )}
       <ChatWidget />
     </div>
