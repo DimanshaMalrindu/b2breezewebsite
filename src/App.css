@@ -359,12 +359,12 @@ body, .landing {
 .wallet-slider { position:relative; margin:2rem 0 1.25rem; padding:1rem 2.75rem; background:var(--surface-alt); border:1px solid var(--border-color); border-radius:16px; }
 .wallet-slider-viewport { overflow:hidden; width:100%; }
 .wallet-slider-track { display:flex; transition:transform .6s cubic-bezier(.6,.2,.2,1); }
-.wallet-slide { padding:0 .5rem; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.wallet-slide { padding:0; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
 .wallet-slide { --mx:50%; --my:50%; }
 .wallet-slide img { width:100%; max-width:420px; height:auto; border-radius:12px; box-shadow:0 4px 18px -6px rgba(0,0,0,.5); border:1px solid rgba(255,255,255,0.05); object-fit:cover; margin:0 auto; transition:transform .5s cubic-bezier(.4,.2,.2,1), box-shadow .6s, transform-origin .15s; will-change:transform; transform-origin:var(--mx) var(--my); }
 .wallet-slide:hover img, .wallet-slide:focus-within img { transform:scale(3.0); box-shadow:0 30px 80px -24px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,0.14); cursor:zoom-in; }
-.wallet-nav { position:absolute; top:50%; transform:translateY(-50%); width:40px; height:40px; border:none; background:rgba(0,0,0,.35); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.4rem; line-height:1; backdrop-filter:blur(4px); transition:.25s; }
-.wallet-nav:hover { background:rgba(0,0,0,.55); }
+.wallet-nav { position:absolute; top:50%; transform:translateY(-50%); width:40px; height:40px; border:none; background:rgba(0,0,0,.55); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.4rem; line-height:1; backdrop-filter:blur(6px); transition:.25s; z-index:6; }
+.wallet-nav:hover { background:rgba(0,0,0,.75); }
 .wallet-nav.prev { left:.5rem; }
 .wallet-nav.next { right:.5rem; }
 .wallet-dots { display:flex; justify-content:center; gap:.5rem; margin-top:.9rem; }
@@ -375,8 +375,11 @@ body, .landing {
 [data-theme='light'] .wallet-dots .dot.active { box-shadow:0 0 0 3px rgba(255,255,255,0.85),0 0 0 5px rgba(0,178,177,0.55); }
 @media (max-width: 560px) { .wallet-slider { padding:1rem 2.25rem; } }
 @media (max-width: 560px) {
-  .wallet-slide { padding:0; }
+  .wallet-slide { padding:0 .4rem; }
   .wallet-slide img { max-width:100%; }
   .wallet-slider { padding:1rem 1rem; }
   .wallet-dots { margin-top:.75rem; }
+  .wallet-nav { width:34px; height:34px; font-size:1.1rem; background:rgba(0,0,0,.55); }
+  .wallet-nav.prev { left:2px; }
+  .wallet-nav.next { right:2px; }
 }
