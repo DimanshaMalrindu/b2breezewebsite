@@ -403,7 +403,23 @@ export default function App() {
                       {walletSlides.map((src, i) => {
                         const basis = 100 / walletSlides.length
                         return (
-                          <div className="wallet-slide" key={i} aria-hidden={i !== walletIndex} style={{ flex: `0 0 ${basis}%` }}>
+                          <div
+                            className="wallet-slide"
+                            key={i}
+                            aria-hidden={i !== walletIndex}
+                            style={{ flex: `0 0 ${basis}%` }}
+                            onMouseMove={(e) => {
+                              const rect = e.currentTarget.getBoundingClientRect()
+                              const x = ((e.clientX - rect.left) / rect.width) * 100
+                              const y = ((e.clientY - rect.top) / rect.height) * 100
+                              e.currentTarget.style.setProperty('--mx', x + '%')
+                              e.currentTarget.style.setProperty('--my', y + '%')
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.setProperty('--mx', '50%')
+                              e.currentTarget.style.setProperty('--my', '50%')
+                            }}
+                          >
                             <img src={src} alt={`Business Card Wallet screenshot ${i + 1}`} loading="lazy" />
                           </div>
                         )
