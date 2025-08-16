@@ -6,7 +6,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [theme, setTheme] = useState<'dark' | 'light'>(() => (localStorage.getItem('theme') as 'dark' | 'light') || 'dark')
   const [showTop, setShowTop] = useState(false)
-  const [featureModal, setFeatureModal] = useState<null | 'card-scanner'>(null)
+  const [featureModal, setFeatureModal] = useState<null | 'card-scanner' | 'card-wallet' | 'customer-directory' | 'task-planner'>(null)
   useEffect(() => { document.documentElement.setAttribute('data-theme', theme); localStorage.setItem('theme', theme); }, [theme])
   const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
   const toggle = () => setMenuOpen(o => !o)
@@ -181,6 +181,18 @@ export default function App() {
               <h3>Business Card Scanner</h3>
               <p>Capture physical cards instantly, auto‑extract contact data, and build a living relationship graph.</p>
             </div>
+            <div
+              className="feature-card interactive"
+              role="button"
+              tabIndex={0}
+              aria-haspopup="dialog"
+              aria-label="Open Business Card Wallet details"
+              onClick={() => setFeatureModal('card-wallet')}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFeatureModal('card-wallet') } }}
+            >
+              <h3>Business Card Wallet</h3>
+              <p>Your centralized, searchable vault for every scanned contact with powerful organization tools.</p>
+            </div>
             <div className="feature-card">
               <h3>Unified Collaboration</h3>
               <p>Centralized workspaces streamline cross‑company communication and decision cycles.</p>
@@ -196,6 +208,30 @@ export default function App() {
             <div className="feature-card">
               <h3>Partner Intelligence</h3>
               <p>Performance insights surface risk and opportunity to optimize strategic alignment.</p>
+            </div>
+            <div
+              className="feature-card interactive"
+              role="button"
+              tabIndex={0}
+              aria-haspopup="dialog"
+              aria-label="Open Customer Directory details"
+              onClick={() => setFeatureModal('customer-directory')}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFeatureModal('customer-directory') } }}
+            >
+              <h3>Customer Directory</h3>
+              <p>Maintain rich customer profiles with history, preferences, and engagement signals in one place.</p>
+            </div>
+            <div
+              className="feature-card interactive"
+              role="button"
+              tabIndex={0}
+              aria-haspopup="dialog"
+              aria-label="Open Task Planner details"
+              onClick={() => setFeatureModal('task-planner')}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFeatureModal('task-planner') } }}
+            >
+              <h3>Task Planner</h3>
+              <p>Organize activities with smart priorities, deadlines, automation, and progress visibility.</p>
             </div>
           </div>
         </section>
@@ -283,7 +319,199 @@ export default function App() {
                 <p className="footnote">Roadmap: multi‑language OCR, handwriting assistance, CRM auto‑sync, meeting auto‑association.</p>
               </div>
               <div className="modal-actions">
-                <a href="#contact" className="btn primary" onClick={() => setFeatureModal(null)}>Request Early Access</a>
+                <a
+                  href="https://b2breeze.vercel.app/"
+                  className="btn primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open the B2Breeze web application in a new tab"
+                >Launch App</a>
+                <button className="btn secondary" onClick={() => setFeatureModal(null)}>Close</button>
+              </div>
+            </div>
+          </div>
+          <button className="modal-backdrop" aria-label="Close overlay" onClick={() => setFeatureModal(null)} />
+        </div>
+      )}
+      {featureModal === 'card-wallet' && (
+        <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-card-wallet-title">
+          <div className="modal-window">
+            <header className="modal-header">
+              <h2 id="modal-card-wallet-title">Business Card Wallet</h2>
+              <button className="modal-close" aria-label="Close" onClick={() => setFeatureModal(null)}>×</button>
+            </header>
+            <div className="modal-body">
+              <p className="lead">Your dynamic, searchable repository for every relationship you’ve captured. The Wallet transforms raw card scans into a living directory that accelerates outreach, collaboration, and strategic follow‑up.</p>
+              <div className="video-embed" aria-label="Business Card Wallet demo video">
+                <iframe
+                  src="https://www.youtube.com/embed/C3veKbMd1ug?rel=0&modestbranding=1"
+                  title="Business Card Wallet Demo"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <div className="modal-columns">
+                <div>
+                  <h3>Core Capabilities</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Unified Index:</strong> All scanned contacts consolidated with instant global search.</li>
+                    <li><strong>Smart Sorting:</strong> Sort by name, company, title, recency, creation source.</li>
+                    <li><strong>Advanced Filters:</strong> Segment by tags (event, region), industry, role seniority, enrichment signals.</li>
+                    <li><strong>Quick Actions:</strong> One‑click call, email, or copy details (desktop & mobile optimized).</li>
+                    <li><strong>Bulk Operations:</strong> Tag, export, or initiate sequences for selected contacts.</li>
+                    <li><strong>Merge & Clean:</strong> Duplicate detection + guided merge flow keeps data pristine.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>Productivity & Insight</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Activity Timeline:</strong> View follow‑ups, meetings, and notes per contact.</li>
+                    <li><strong>Auto Enrichment:</strong> Company profile & role context (where enabled).</li>
+                    <li><strong>Relationship Signals:</strong> Tag hot, nurture, dormant based on interaction velocity.</li>
+                    <li><strong>Saved Views:</strong> Persist personal or shared filtered boards.</li>
+                    <li><strong>Export & Sync:</strong> Push to CRM, download CSV/VCF, or webhook integration.</li>
+                    <li><strong>Mobile Friendly:</strong> Optimized layout for in‑event usage.</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="modal-extra">
+                <h3>Security & Governance</h3>
+                <p>Role‑based access, audit history, and restricted fields ensure sensitive contact data is handled responsibly. Optional retention and redaction policies align with compliance requirements.</p>
+                <p className="footnote">Roadmap: AI role inference, intent scoring, multi‑org sharing controls, contact health scoring, and workflow triggers.</p>
+              </div>
+              <div className="modal-actions">
+                <a
+                  href="https://b2breeze.vercel.app/"
+                  className="btn primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open the B2Breeze web application in a new tab"
+                >Launch App</a>
+                <button className="btn secondary" onClick={() => setFeatureModal(null)}>Close</button>
+              </div>
+            </div>
+          </div>
+          <button className="modal-backdrop" aria-label="Close overlay" onClick={() => setFeatureModal(null)} />
+        </div>
+      )}
+      {featureModal === 'customer-directory' && (
+        <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-customer-directory-title">
+          <div className="modal-window">
+            <header className="modal-header">
+              <h2 id="modal-customer-directory-title">Customer Directory</h2>
+              <button className="modal-close" aria-label="Close" onClick={() => setFeatureModal(null)}>×</button>
+            </header>
+            <div className="modal-body">
+              <p className="lead">A centralized, intelligent profile hub for every customer—unifying attributes, interaction timelines, preferences, and strategic context to power proactive engagement.</p>
+              <div className="video-embed" aria-label="Customer Directory demo video">
+                <iframe
+                  src="https://www.youtube.com/embed/C3veKbMd1ug?rel=0&modestbranding=1"
+                  title="Customer Directory Demo"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <div className="modal-columns">
+                <div>
+                  <h3>Core Profile Data</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Unified Profile:</strong> Company + contact roll‑up with key metadata.</li>
+                    <li><strong>Interaction History:</strong> Meetings, emails, calls, notes, touchpoints.</li>
+                    <li><strong>Engagement Signals:</strong> Recent activity, responsiveness, lifecycle stage.</li>
+                    <li><strong>Preferences:</strong> Channels, cadence, content & region specifics.</li>
+                    <li><strong>Ownership & Roles:</strong> Assigned reps, success managers, stakeholders.</li>
+                    <li><strong>Attachments:</strong> Contracts, proposals, supporting documents.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>Productivity & Intelligence</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Advanced Filtering:</strong> Segment by industry, ARR band, tier, status.</li>
+                    <li><strong>Smart Search:</strong> Fuzzy + field‑specific query (name, domain, tag).</li>
+                    <li><strong>Quick Actions:</strong> Launch call, compose email, schedule follow‑up.</li>
+                    <li><strong>Custom Fields:</strong> Extend schema without engineering ticket.</li>
+                    <li><strong>Aggregate Metrics:</strong> Health, velocity, engagement score snapshots.</li>
+                    <li><strong>Saved Views:</strong> Personal & shared workspace boards.</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="modal-extra">
+                <h3>Security & Governance</h3>
+                <p>Fine‑grained permission layers restrict sensitive commercial data while enabling cross‑functional visibility. Audit trails, change logs, and retention policies reinforce compliance.</p>
+                <p className="footnote">Roadmap: predictive churn flags, AI summary panels, intent enrichment, timeline anomaly alerts, and auto lifecycle stage recalibration.</p>
+              </div>
+              <div className="modal-actions">
+                <a
+                  href="https://b2breeze.vercel.app/"
+                  className="btn primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open the B2Breeze web application in a new tab"
+                >Launch App</a>
+                <button className="btn secondary" onClick={() => setFeatureModal(null)}>Close</button>
+              </div>
+            </div>
+          </div>
+          <button className="modal-backdrop" aria-label="Close overlay" onClick={() => setFeatureModal(null)} />
+        </div>
+      )}
+      {featureModal === 'task-planner' && (
+        <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-task-planner-title">
+          <div className="modal-window">
+            <header className="modal-header">
+              <h2 id="modal-task-planner-title">Task Planner</h2>
+              <button className="modal-close" aria-label="Close" onClick={() => setFeatureModal(null)}>×</button>
+            </header>
+            <div className="modal-body">
+              <p className="lead">Plan, prioritize, and execute work with clarity. The Task Planner turns scattered to‑dos into structured, trackable workflows aligned to outcomes.</p>
+              <div className="video-embed" aria-label="Task Planner demo video">
+                <iframe
+                  src="https://www.youtube.com/embed/C3veKbMd1ug?rel=0&modestbranding=1"
+                  title="Task Planner Demo"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <div className="modal-columns">
+                <div>
+                  <h3>Core Capabilities</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Flexible Views:</strong> Kanban, List, Calendar, Timeline.</li>
+                    <li><strong>Smart Priorities:</strong> Inline SLA + urgency indicators.</li>
+                    <li><strong>Deadlines & Reminders:</strong> Auto follow‑up nudges before risk.</li>
+                    <li><strong>Dependencies:</strong> Blocked/blocks relationships with visual cues.</li>
+                    <li><strong>Recurring Tasks:</strong> Rules for daily/weekly/monthly cycles.</li>
+                    <li><strong>Subtasks & Checklists:</strong> Break work into actionable units.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>Automation & Insight</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Auto Assignment:</strong> Route based on role, load, or tags.</li>
+                    <li><strong>Progress Analytics:</strong> Throughput, cycle time, completion rate.</li>
+                    <li><strong>Bulk Actions:</strong> Multi‑edit, reassign, tag, status shift.</li>
+                    <li><strong>Smart Suggestions:</strong> Surface stale or at‑risk tasks.</li>
+                    <li><strong>Cross‑Linking:</strong> Connect tasks to contacts, deals, or events.</li>
+                    <li><strong>Shortcut Commands:</strong> Quick create with natural text parsing.</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="modal-extra">
+                <h3>Security & Governance</h3>
+                <p>Role‑aware visibility, immutable audit logs, and field‑level restrictions protect sensitive workflows. Configurable retention & export safeguards regulatory alignment.</p>
+                <p className="footnote">Roadmap: AI workload balancing, predictive delay alerts, time estimation, auto prioritization, and focused daily briefing digest.</p>
+              </div>
+              <div className="modal-actions">
+                <a
+                  href="https://b2breeze.vercel.app/"
+                  className="btn primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open the B2Breeze web application in a new tab"
+                >Launch App</a>
                 <button className="btn secondary" onClick={() => setFeatureModal(null)}>Close</button>
               </div>
             </div>
