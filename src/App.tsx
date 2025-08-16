@@ -244,6 +244,15 @@ export default function App() {
             </header>
             <div className="modal-body">
               <p className="lead">Turn every in‑person interaction into structured, actionable intelligence. Photograph a business card and receive clean, enriched contact data in seconds—securely attached to your user account.</p>
+              <div className="video-embed" aria-label="Business Card Scanner demo video">
+                <iframe
+                  src="https://www.youtube.com/embed/C3veKbMd1ug?rel=0&modestbranding=1"
+                  title="Business Card Scanner Demo"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
               <div className="modal-columns">
                 <div>
                   <h3>How It Works</h3>
