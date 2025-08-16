@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
+import wallet1 from './assets/businesscardwallet/1.png'
+import wallet2 from './assets/businesscardwallet/2.png'
+import wallet3 from './assets/businesscardwallet/3.png'
 import ChatWidget from './components/ChatWidget'
 import './App.css'
 
@@ -10,6 +13,11 @@ export default function App() {
   const modalOrder: Exclude<typeof featureModal, null>[] = ['card-scanner', 'card-wallet', 'customer-directory', 'analytics', 'invoice-generator', 'task-planner', 'campaign-planner']
   const [contentAnim, setContentAnim] = useState(false)
   const [animDirection, setAnimDirection] = useState<'forward' | 'backward'>('forward')
+  // Business Card Wallet slider state
+  const walletSlides = [wallet1, wallet2, wallet3]
+  const [walletIndex, setWalletIndex] = useState(0)
+  const nextWalletSlide = () => setWalletIndex(i => (i + 1) % walletSlides.length)
+  const prevWalletSlide = () => setWalletIndex(i => (i - 1 + walletSlides.length) % walletSlides.length)
   // Ref to modal window for dynamic arrow positioning
   const modalWindowRef = useRef<HTMLDivElement | null>(null)
   const goNext = () => {
@@ -388,6 +396,27 @@ export default function App() {
                 <div className="video-embed" aria-label="Business Card Wallet demo video"><iframe src="https://www.youtube.com/embed/C3veKbMd1ug?rel=0&modestbranding=1" title="Business Card Wallet Demo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen /></div>
                 <div className="modal-columns"><div><h3>Core Capabilities</h3><ul className="bullet-list"><li><strong>Unified Index:</strong> All scanned contacts consolidated with instant global search.</li><li><strong>Smart Sorting:</strong> Sort by name, company, title, recency, creation source.</li><li><strong>Advanced Filters:</strong> Segment by tags (event, region), industry, role seniority, enrichment signals.</li><li><strong>Quick Actions:</strong> One‑click call, email, or copy details (desktop & mobile optimized).</li><li><strong>Bulk Operations:</strong> Tag, export, or initiate sequences for selected contacts.</li><li><strong>Merge & Clean:</strong> Duplicate detection + guided merge flow keeps data pristine.</li></ul></div><div><h3>Productivity & Insight</h3><ul className="bullet-list"><li><strong>Activity Timeline:</strong> View follow‑ups, meetings, and notes per contact.</li><li><strong>Auto Enrichment:</strong> Company profile & role context (where enabled).</li><li><strong>Relationship Signals:</strong> Tag hot, nurture, dormant based on interaction velocity.</li><li><strong>Saved Views:</strong> Persist personal or shared filtered boards.</li><li><strong>Export & Sync:</strong> Push to CRM, download CSV/VCF, or webhook integration.</li><li><strong>Mobile Friendly:</strong> Optimized layout for in‑event usage.</li></ul></div></div>
                 <div className="modal-extra"><h3>Security & Governance</h3><p>Role‑based access, audit history, and restricted fields ensure sensitive contact data is handled responsibly. Optional retention and redaction policies align with compliance requirements.</p><p className="footnote">Roadmap: AI role inference, intent scoring, multi‑org sharing controls, contact health scoring, and workflow triggers.</p></div>
+                <div className="wallet-slider" aria-label="Business Card Wallet screenshots carousel">
+                  <button type="button" className="wallet-nav prev" onClick={prevWalletSlide} aria-label="Previous screenshot">‹</button>
+                  <div className="wallet-slider-viewport">
+                    <div className="wallet-slider-track" style={{ width: walletSlides.length * 100 + '%', transform: `translateX(-${walletIndex * (100 / walletSlides.length)}%)` }}>
+                      {walletSlides.map((src, i) => {
+                        const basis = 100 / walletSlides.length
+                        return (
+                          <div className="wallet-slide" key={i} aria-hidden={i !== walletIndex} style={{ flex: `0 0 ${basis}%` }}>
+                            <img src={src} alt={`Business Card Wallet screenshot ${i + 1}`} loading="lazy" />
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                  <button type="button" className="wallet-nav next" onClick={nextWalletSlide} aria-label="Next screenshot">›</button>
+                  <div className="wallet-dots" role="tablist" aria-label="Screenshots navigation">
+                    {walletSlides.map((_, i) => (
+                      <button key={i} className={'dot' + (i === walletIndex ? ' active' : '')} aria-label={`Go to screenshot ${i + 1}`} aria-selected={i === walletIndex} onClick={() => setWalletIndex(i)} />
+                    ))}
+                  </div>
+                </div>
                 <div className="modal-actions"><a href="https://b2breeze.vercel.app/" className="btn primary" target="_blank" rel="noopener noreferrer" aria-label="Open the B2Breeze web application in a new tab">Launch App</a><button className="btn secondary" onClick={() => setFeatureModal(null)}>Close</button></div>
               </div>)
             case 'customer-directory': return (

@@ -354,3 +354,21 @@ body, .landing {
 .video-embed { position:relative; width:100%; max-width:760px; aspect-ratio:16/9; background:#020b12; border:1px solid var(--border-color-subtle); border-radius:14px; overflow:hidden; align-self:center; box-shadow:0 6px 30px -10px rgba(0,0,0,.55); }
 .video-embed iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
 @media (max-width:520px){ .video-embed { border-radius:10px; } }
+
+/* Wallet slider */
+.wallet-slider { position:relative; margin:2rem 0 1.25rem; padding:1rem 2.75rem; background:var(--surface-alt); border:1px solid var(--border-color); border-radius:16px; }
+.wallet-slider-viewport { overflow:hidden; width:100%; }
+.wallet-slider-track { display:flex; transition:transform .6s cubic-bezier(.6,.2,.2,1); }
+.wallet-slide { padding:0 .5rem; display:flex; align-items:center; justify-content:center; }
+.wallet-slide img { width:100%; max-width:420px; height:auto; border-radius:12px; box-shadow:0 4px 18px -6px rgba(0,0,0,.5); border:1px solid rgba(255,255,255,0.05); object-fit:cover; margin:0 auto; }
+.wallet-nav { position:absolute; top:50%; transform:translateY(-50%); width:40px; height:40px; border:none; background:rgba(0,0,0,.35); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.4rem; line-height:1; backdrop-filter:blur(4px); transition:.25s; }
+.wallet-nav:hover { background:rgba(0,0,0,.55); }
+.wallet-nav.prev { left:.5rem; }
+.wallet-nav.next { right:.5rem; }
+.wallet-dots { display:flex; justify-content:center; gap:.5rem; margin-top:.9rem; }
+.wallet-dots .dot { width:12px; height:12px; background:var(--surface-alt); border:2px solid var(--border-color-subtle); border-radius:50%; cursor:pointer; padding:0; line-height:0; transition:.3s; position:relative; }
+.wallet-dots .dot:hover { border-color: var(--accent); }
+.wallet-dots .dot:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.wallet-dots .dot.active { background:var(--accent); border-color:var(--accent); transform:scale(1.25); box-shadow:0 0 0 3px rgba(0,0,0,0.35),0 0 0 5px rgba(0,178,177,0.55); }
+[data-theme='light'] .wallet-dots .dot.active { box-shadow:0 0 0 3px rgba(255,255,255,0.85),0 0 0 5px rgba(0,178,177,0.55); }
+@media (max-width: 560px) { .wallet-slider { padding:1rem 2.25rem; } }
