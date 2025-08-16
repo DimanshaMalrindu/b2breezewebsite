@@ -193,22 +193,7 @@ export default function App() {
               <h3>Business Card Wallet</h3>
               <p>Your centralized, searchable vault for every scanned contact with powerful organization tools.</p>
             </div>
-            <div className="feature-card">
-              <h3>Unified Collaboration</h3>
-              <p>Centralized workspaces streamline cross‑company communication and decision cycles.</p>
-            </div>
-            <div className="feature-card">
-              <h3>Operational Visibility</h3>
-              <p>Real‑time status across shipments, campaigns, and vendor deliverables reduces friction.</p>
-            </div>
-            <div className="feature-card">
-              <h3>Workflow Automation</h3>
-              <p>Automated routing, reminders, and approvals keep momentum without manual chasing.</p>
-            </div>
-            <div className="feature-card">
-              <h3>Partner Intelligence</h3>
-              <p>Performance insights surface risk and opportunity to optimize strategic alignment.</p>
-            </div>
+
             <div
               className="feature-card interactive"
               role="button"
