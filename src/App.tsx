@@ -6,7 +6,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [theme, setTheme] = useState<'dark' | 'light'>(() => (localStorage.getItem('theme') as 'dark' | 'light') || 'dark')
   const [showTop, setShowTop] = useState(false)
-  const [featureModal, setFeatureModal] = useState<null | 'card-scanner' | 'card-wallet' | 'customer-directory' | 'task-planner'>(null)
+  const [featureModal, setFeatureModal] = useState<null | 'card-scanner' | 'card-wallet' | 'customer-directory' | 'analytics' | 'invoice-generator' | 'task-planner' | 'campaign-planner'>(null)
   useEffect(() => { document.documentElement.setAttribute('data-theme', theme); localStorage.setItem('theme', theme); }, [theme])
   const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
   const toggle = () => setMenuOpen(o => !o)
@@ -211,12 +211,48 @@ export default function App() {
               role="button"
               tabIndex={0}
               aria-haspopup="dialog"
+              aria-label="Open Analytics details"
+              onClick={() => setFeatureModal('analytics')}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFeatureModal('analytics') } }}
+            >
+              <h3>Analytics</h3>
+              <p>Track revenue, leads, conversions & financial performance with real‑time visual insights.</p>
+            </div>
+            <div
+              className="feature-card interactive"
+              role="button"
+              tabIndex={0}
+              aria-haspopup="dialog"
               aria-label="Open Task Planner details"
               onClick={() => setFeatureModal('task-planner')}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFeatureModal('task-planner') } }}
             >
               <h3>Task Planner</h3>
               <p>Organize activities with smart priorities, deadlines, automation, and progress visibility.</p>
+            </div>
+            <div
+              className="feature-card interactive"
+              role="button"
+              tabIndex={0}
+              aria-haspopup="dialog"
+              aria-label="Open Invoice Generator details"
+              onClick={() => setFeatureModal('invoice-generator')}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFeatureModal('invoice-generator') } }}
+            >
+              <h3>Invoice Generator</h3>
+              <p>Create professional invoices in minutes. Customize templates, track payments, and manage billing efficiently.</p>
+            </div>
+            <div
+              className="feature-card interactive"
+              role="button"
+              tabIndex={0}
+              aria-haspopup="dialog"
+              aria-label="Open Campaign Planner details"
+              onClick={() => setFeatureModal('campaign-planner')}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFeatureModal('campaign-planner') } }}
+            >
+              <h3>Campaign Planner</h3>
+              <p>Design and execute marketing campaigns with ease. Track performance and optimize outreach.</p>
             </div>
           </div>
         </section>
@@ -442,6 +478,103 @@ export default function App() {
           <button className="modal-backdrop" aria-label="Close overlay" onClick={() => setFeatureModal(null)} />
         </div>
       )}
+      {featureModal === 'analytics' && (
+        <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-analytics-title">
+          <div className="modal-window">
+            <header className="modal-header">
+              <h2 id="modal-analytics-title">Analytics</h2>
+              <button className="modal-close" aria-label="Close" onClick={() => setFeatureModal(null)}>×</button>
+            </header>
+            <div className="modal-body">
+              <p className="lead">Unified commercial intelligence at a glance: pipeline health, revenue momentum, engagement efficiency, and financial reliability—updated in near real time.</p>
+              <div className="video-embed" aria-label="Analytics overview video">
+                <iframe
+                  src="https://www.youtube.com/embed/C3veKbMd1ug?rel=0&modestbranding=1"
+                  title="Analytics Overview"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <div className="metrics-grid" style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))', marginTop: '1.5rem' }}>
+                {[
+                  { label: 'Total Leads', value: '1,248', change: '+8%' },
+                  { label: 'Total Revenue', value: '$912K', change: '+5%' },
+                  { label: 'Conversion Rate', value: '24.6%', change: '+0.9pt' },
+                  { label: 'Total Customers', value: '386', change: '+12' },
+                  { label: 'Pending Quotations', value: '42', change: '-' },
+                  { label: 'Overdue Invoices', value: '7', change: '-2' },
+                  { label: 'Avg Order Value', value: '$2,365', change: '+3%' },
+                  { label: 'Total Invoices', value: '1,031', change: '+4%' }
+                ].map(m => (
+                  <div key={m.label} className="metric" style={{ padding: '0.75rem 0.9rem', background: 'var(--surface-alt)', border: '1px solid var(--border-color)', borderRadius: '8px' }}>
+                    <div style={{ fontSize: '0.75rem', letterSpacing: '.05em', textTransform: 'uppercase', opacity: .7 }}>{m.label}</div>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>{m.value}</div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--accent)' }}>{m.change}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="revenue-trend" style={{ marginTop: '2rem' }}>
+                <h3 style={{ marginBottom: '0.5rem' }}>Revenue Trend</h3>
+                <svg viewBox="0 0 300 120" role="img" aria-label="Revenue trend sparkline" style={{ width: '100%', height: '120px' }}>
+                  <defs>
+                    <linearGradient id="revFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.45" />
+                      <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M10 90 L40 70 L70 72 L100 55 L130 60 L160 42 L190 48 L220 30 L250 35 L280 20" fill="none" stroke="var(--accent)" strokeWidth="2.5" strokeLinecap="round" />
+                  <path d="M10 90 L40 70 L70 72 L100 55 L130 60 L160 42 L190 48 L220 30 L250 35 L280 20 L280 110 L10 110 Z" fill="url(#revFill)" stroke="none" />
+                  {[10, 40, 70, 100, 130, 160, 190, 220, 250, 280].map((x, i) => {
+                    const ys = [90, 70, 72, 55, 60, 42, 48, 30, 35, 20];
+                    return <circle key={x} cx={x} cy={ys[i]} r={3} fill="var(--accent)" />
+                  })}
+                </svg>
+              </div>
+              <div className="modal-columns" style={{ marginTop: '1.5rem' }}>
+                <div>
+                  <h3>Operational Insight</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Real‑Time Refresh:</strong> Stream updates for key commercial KPIs.</li>
+                    <li><strong>Drill‑Through:</strong> Click a metric to pivot to underlying records.</li>
+                    <li><strong>Segment Filters:</strong> Time range, channel, region, owner, tier.</li>
+                    <li><strong>Health Indicators:</strong> Color & delta encoding for variance vs target.</li>
+                    <li><strong>Benchmark Overlays:</strong> Goal & historical trend reference lines.</li>
+                    <li><strong>Forecast Preview:</strong> Extrapolated linear / seasonality model (roadmap).</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>Data Integrity & Governance</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Source Traceability:</strong> Hover lineage for each metric’s composition.</li>
+                    <li><strong>Role‑Scoped Views:</strong> Sensitive financial KPIs gated by permission.</li>
+                    <li><strong>Normalization:</strong> Consistent currency + timezone harmonization.</li>
+                    <li><strong>Snapshot History:</strong> Daily rollups stored for trend reliability.</li>
+                    <li><strong>Anomaly Flags:</strong> Detect suspicious spikes/drops (roadmap).</li>
+                    <li><strong>Export:</strong> CSV / API access for BI tool federation.</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="modal-extra">
+                <h3>Security & Privacy</h3>
+                <p>Principle of least privilege enforced; all aggregation happens server‑side. PII redaction in derived datasets and strict separation of financial vs personally identifiable dimensions.</p>
+                <p className="footnote">Roadmap: predictive churn & revenue forecasting, cohort retention explorer, funnel attribution modeling, and AI narrative insights.</p>
+              </div>
+              <div className="modal-actions">
+                <a
+                  href="https://b2breeze.vercel.app/"
+                  className="btn primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open the B2Breeze web application in a new tab"
+                >Launch App</a>
+                <button className="btn secondary" onClick={() => setFeatureModal(null)}>Close</button>
+              </div>
+            </div>
+          </div>
+          <button className="modal-backdrop" aria-label="Close overlay" onClick={() => setFeatureModal(null)} />
+        </div>
+      )}
       {featureModal === 'task-planner' && (
         <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-task-planner-title">
           <div className="modal-window">
@@ -488,6 +621,178 @@ export default function App() {
                 <h3>Security & Governance</h3>
                 <p>Role‑aware visibility, immutable audit logs, and field‑level restrictions protect sensitive workflows. Configurable retention & export safeguards regulatory alignment.</p>
                 <p className="footnote">Roadmap: AI workload balancing, predictive delay alerts, time estimation, auto prioritization, and focused daily briefing digest.</p>
+              </div>
+              <div className="modal-actions">
+                <a
+                  href="https://b2breeze.vercel.app/"
+                  className="btn primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open the B2Breeze web application in a new tab"
+                >Launch App</a>
+                <button className="btn secondary" onClick={() => setFeatureModal(null)}>Close</button>
+              </div>
+            </div>
+          </div>
+          <button className="modal-backdrop" aria-label="Close overlay" onClick={() => setFeatureModal(null)} />
+        </div>
+      )}
+      {featureModal === 'invoice-generator' && (
+        <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-invoice-generator-title">
+          <div className="modal-window">
+            <header className="modal-header">
+              <h2 id="modal-invoice-generator-title">Invoice Generator</h2>
+              <button className="modal-close" aria-label="Close" onClick={() => setFeatureModal(null)}>×</button>
+            </header>
+            <div className="modal-body">
+              <p className="lead">Produce accurate, branded invoices in moments. The Invoice Generator streamlines billing—from itemization and tax logic to delivery, tracking and reconciliation.</p>
+              <div className="video-embed" aria-label="Invoice Generator demo video">
+                <iframe
+                  src="https://www.youtube.com/embed/C3veKbMd1ug?rel=0&modestbranding=1"
+                  title="Invoice Generator Demo"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <div className="modal-columns">
+                <div>
+                  <h3>Creation & Templates</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Template Library:</strong> Branded layouts with logos, color palette, legal footer.</li>
+                    <li><strong>Dynamic Fields:</strong> Auto fill client, project, PO, tax IDs, payment terms.</li>
+                    <li><strong>Line Item Builder:</strong> Quantity, unit cost, discounts, multi‑currency.</li>
+                    <li><strong>Tax Rules:</strong> Region + category based VAT/GST logic (override capable).</li>
+                    <li><strong>Number Sequencing:</strong> Configurable prefixes & incremental counters.</li>
+                    <li><strong>Draft Autosave:</strong> Prevents loss mid‑edit; version history snapshots.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>Delivery & Tracking</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Multi‑Channel Send:</strong> Email PDF, share link, export or download.</li>
+                    <li><strong>Status Lifecycle:</strong> Draft → Sent → Viewed → Partially Paid → Paid → Overdue.</li>
+                    <li><strong>View Analytics:</strong> Open timestamp & geo (privacy‑safe).</li>
+                    <li><strong>Payment Reminders:</strong> Automated polite nudges pre & post due date.</li>
+                    <li><strong>Partial Payments:</strong> Track installments and outstanding balance.</li>
+                    <li><strong>Attachment Support:</strong> Add statements of work or receipts.</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="modal-columns">
+                <div>
+                  <h3>Financial Controls</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Multi‑Currency:</strong> FX rate snapshot with base & display currency.</li>
+                    <li><strong>Tax Breakdown:</strong> Line + total level; reverse charge flags.</li>
+                    <li><strong>Revenue Categorization:</strong> Map to ledger / GL codes (exportable).</li>
+                    <li><strong>Write‑Off & Credit Notes:</strong> Adjustments with audit linkage.</li>
+                    <li><strong>Late Fees:</strong> Optional interest or flat penalty automation.</li>
+                    <li><strong>Export:</strong> CSV / PDF / API sync (accounting integration roadmap).</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>Productivity & Intelligence</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Bulk Generation:</strong> Batch invoice similar contracts in one action.</li>
+                    <li><strong>Search & Filter:</strong> By client, status, amount range, tag, overdue window.</li>
+                    <li><strong>Aging Report:</strong> Real‑time outstanding receivables tiers.</li>
+                    <li><strong>Dispute Notes:</strong> Internal commentary & resolution tracking.</li>
+                    <li><strong>Performance KPIs:</strong> DSO, on‑time payment %, recurring revenue share.</li>
+                    <li><strong>Smart Suggestions:</strong> Flag inconsistent pricing or margin drift.</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="modal-extra">
+                <h3>Security & Compliance</h3>
+                <p>Role‑based access ensures only finance & authorized managers edit financial artifacts. Immutable audit logs track every revision, send event, and status change. Data encrypted in transit and at rest.</p>
+                <p className="footnote">Roadmap: Integrated payment links, automated reconciliation imports, OCR expense attachment extraction, anomaly detection, subscription invoicing engine.</p>
+              </div>
+              <div className="modal-actions">
+                <a
+                  href="https://b2breeze.vercel.app/"
+                  className="btn primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open the B2Breeze web application in a new tab"
+                >Launch App</a>
+                <button className="btn secondary" onClick={() => setFeatureModal(null)}>Close</button>
+              </div>
+            </div>
+          </div>
+          <button className="modal-backdrop" aria-label="Close overlay" onClick={() => setFeatureModal(null)} />
+        </div>
+      )}
+      {featureModal === 'campaign-planner' && (
+        <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-campaign-planner-title">
+          <div className="modal-window">
+            <header className="modal-header">
+              <h2 id="modal-campaign-planner-title">Campaign Planner</h2>
+              <button className="modal-close" aria-label="Close" onClick={() => setFeatureModal(null)}>×</button>
+            </header>
+            <div className="modal-body">
+              <p className="lead">Design, launch, and monitor multi‑channel campaigns from a single orchestrated workspace. The Campaign Planner unifies planning, targeting, execution, and measurement across email, WhatsApp, SMS and more.</p>
+              <div className="video-embed" aria-label="Campaign Planner demo video">
+                <iframe
+                  src="https://www.youtube.com/embed/C3veKbMd1ug?rel=0&modestbranding=1"
+                  title="Campaign Planner Demo"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <div className="modal-columns">
+                <div>
+                  <h3>Create & Execute</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Multi‑Channel:</strong> Email, WhatsApp, SMS (web push & in‑app roadmap).</li>
+                    <li><strong>Audience Builder:</strong> Segment by tags, lifecycle stage, behavior triggers.</li>
+                    <li><strong>Template Library:</strong> Reusable branded layouts with variable fields.</li>
+                    <li><strong>Personalization:</strong> Dynamic merge fields + conditional content blocks.</li>
+                    <li><strong>Scheduling:</strong> Immediate send, batch windows, or rolling drip cadence.</li>
+                    <li><strong>Approval Flow:</strong> Optional reviewer sign‑off before activation.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>Tracking & Optimization</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Delivery Metrics:</strong> Sent, delivered, bounces, throttling visibility.</li>
+                    <li><strong>Engagement:</strong> Opens, unique opens, clicks, CTR, reply rate.</li>
+                    <li><strong>Conversion:</strong> Goal completions (e.g., signups, bookings) attribution.</li>
+                    <li><strong>A/B Testing:</strong> Variant subject, content, timing with significance hints.</li>
+                    <li><strong>Heatmaps:</strong> (Email) Click density & scroll depth (roadmap).</li>
+                    <li><strong>Channel Comparison:</strong> Normalized KPI panel across mediums.</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="modal-columns">
+                <div>
+                  <h3>Status & Governance</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Lifecycle States:</strong> Draft, Scheduled, Active, Paused, Completed, Closed.</li>
+                    <li><strong>Pause / Resume:</strong> Immediate global halt without losing stats.</li>
+                    <li><strong>Audit Trail:</strong> Version history of content & targeting changes.</li>
+                    <li><strong>Compliance:</strong> Opt‑out sync + consent tagging per channel.</li>
+                    <li><strong>Rate Controls:</strong> Send ceilings to protect deliverability.</li>
+                    <li><strong>Role Permissions:</strong> Restrict who can activate or modify live runs.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>Intelligence & Productivity</h3>
+                  <ul className="bullet-list">
+                    <li><strong>Recommendations:</strong> Best send windows & subject length insights.</li>
+                    <li><strong>Engagement Scoring:</strong> Recipient heat tiers for re‑targeting.</li>
+                    <li><strong>Underperforming Alerts:</strong> Auto flag dips below benchmark.</li>
+                    <li><strong>Suppression Logic:</strong> Smart fatigue prevention & quiet hours.</li>
+                    <li><strong>Attribution Assist:</strong> Multi‑touch timeline context (roadmap).</li>
+                    <li><strong>Reusable Blocks:</strong> Drag modular sections across campaigns.</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="modal-extra">
+                <h3>Security & Data Integrity</h3>
+                <p>Channel keys stored securely; only hashed identifiers shared externally. Fine‑grained access ensures sensitive recipient data and opt‑out lists remain protected. All interaction events are immutable and time‑stamped.</p>
+                <p className="footnote">Roadmap: AI subject line generator, predictive conversion modeling, cross‑channel saturation optimizer, automated re‑engagement flows, and attribution blending.</p>
               </div>
               <div className="modal-actions">
                 <a
